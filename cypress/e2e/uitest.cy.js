@@ -16,8 +16,8 @@ describe('Instrument Test', () => {
 
   it('Validate that Buy & Sell prices are present and sell value is less than buy value', () => {
      // We need to .invoke('text') to test HTML content 
-     // then we need to trim the text to get to the number part before parsing the integer.
-     // then parseFloat to convert to to an Int/Float to compare
+     // then we need to trim the text to get to the number part before parsing the integer
+     // then parseFloat to convert it to an Int/Float so we can compare them
     cy.get('.ajb-inline-block')
       .first()
       .should('be.visible')
@@ -29,7 +29,6 @@ describe('Instrument Test', () => {
       })
       .then(parseFloat)
       .should('be.a', 'number')
-      .and('equal', 1423.8)
       .then((sellValue) => {
         cy.get('.ajb-inline-block')
         .eq(1)
@@ -42,7 +41,6 @@ describe('Instrument Test', () => {
         })
         .then(parseFloat)
         .should('be.a', 'number')
-        .and('equal', 1424.2)
         .then((buyValue) => {
             expect(sellValue).to.be.lessThan(buyValue)
             cy.log('SELL VALUE IS LESS THAN BUY VALUE')
@@ -50,13 +48,13 @@ describe('Instrument Test', () => {
       })
   })
 
-   it('Validate that black banner is present with “Not yet a customer?” link', () => {
+  it('Validate that black banner is present with “Not yet a customer?” link', () => {
     cy.contains('Not yet a customer?')
     cy.get('#login-banner-not-a-customer').should('have.attr', 'href', '/our-services')
-    })
+   })
 
-    it('Validate that page has Company profile header and check its sector is “Healthcare”', () => {
-      cy.get('[data-testid="companyProfileHeader"]').should('have.text', 'Company profile')
-      cy.get('[data-testid="sectorValue"]').should('have.text', 'Healthcare')
-    })
+  it('Validate that page has Company profile header and check its sector is “Healthcare”', () => {
+    cy.get('[data-testid="companyProfileHeader"]').should('have.text', 'Company profile')
+    cy.get('[data-testid="sectorValue"]').should('have.text', 'Healthcare')
+  })
 })
